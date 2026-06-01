@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>MemeCase | Fundas con Memes y actitud</title>
+  <!-- Font Awesome 6 (iconos gratuitos) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts: tipografía moderna y juvenil -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- VARIABLES GLOBALES (FÁCILMENTE MODIFICABLES) ---------- */
+    :root {
+      --color-primary: #ff5e7c;    /* Rosa divertido - cambiar aquí el tono principal */
+      --color-secondary: #6c5ce7;  /* Morado acento */
+      --color-bg-light: #fff9f9;
+      --color-card: #ffffff;
+      --color-text: #2d2f36;
+      --color-text-light: #6c6f78;
+      --shadow-sm: 0 10px 20px rgba(0,0,0,0.05), 0 6px 6px rgba(0,0,0,0.02);
+      --shadow-hover: 0 20px 30px -12px rgba(0,0,0,0.15);
+      --border-radius: 28px;
+      --transition: 0.25s ease;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--color-bg-light);
+      color: var(--color-text);
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    /* Header */
+    header {
+      background: white;
+      backdrop-filter: blur(8px);
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 16px 0;
+    }
+    .header-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .logo h1 {
+      font-size: 1.9rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+    }
+    .logo p {
+      font-size: 0.8rem;
+      color: var(--color-text-light);
+    }
+    .nav-links a {
+      margin-left: 28px;
+      text-decoration: none;
+      font-weight: 600;
+      color: var(--color-text);
+      transition: color var(--transition);
+    }
+    .nav-links a:hover {
+      color: var(--color-primary);
+    }
+    /* Secciones generales */
+    section {
+      padding: 70px 0;
+      border-bottom: 1px solid #f0eef3;
+    }
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      position: relative;
+      display: inline-block;
+    }
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 0;
+      width: 70px;
+      height: 4px;
+      background: var(--color-primary);
+      border-radius: 4px;
+    }
+    .grid-4ps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 32px;
+      margin-top: 20px;
+    }
+    .p-card {
+      background: var(--color-card);
+      border-radius: var(--border-radius);
+      padding: 28px 20px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .p-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+    }
+    .p-icon {
+      font-size: 2.8rem;
+      color: var(--color-primary);
+      margin-bottom: 16px;
+    }
+    .p-card h3 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .p-card p {
+      color: var(--color-text-light);
+    }
+    /* Catálogo estilo cards */
+    .catalogo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 32px;
+      margin-top: 30px;
+    }
+    .product-card {
+      background: white;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition);
+    }
+    .product-card:hover {
+      transform: scale(1.02);
+      box-shadow: var(--shadow-hover);
+    }
+    .product-img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      background: #fdeff2;
+      display: block;
+    }
+    .product-info {
+      padding: 20px 18px 24px;
+    }
+    .product-title {
+      font-weight: 800;
+      font-size: 1.3rem;
+      margin-bottom: 6px;
+    }
+    .product-price {
+      color: var(--color-primary);
+      font-weight: 700;
+      font-size: 1.4rem;
+      margin: 12px 0;
+    }
+    .btn-demo {
+      background: #f3f0ff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 60px;
+      font-weight: 600;
+      color: var(--color-secondary);
+      cursor: default;
+      display: inline-block;
+    }
+    /* Contacto + ubicaciones */
+    .contact-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-top: 20px;
+    }
+    .contact-info-box {
+      flex: 1.2;
+      background: white;
+      border-radius: 32px;
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+    .ubicaciones-box {
+      flex: 1;
+      background: white;
+      border-radius: 32px;
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+    .contact-detail {
+      margin: 24px 0;
+    }
+    .contact-detail i {
+      width: 36px;
+      font-size: 1.4rem;
+      color: var(--color-primary);
+    }
+    .map-container {
+      margin-top: 28px;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    iframe {
+      width: 100%;
+      height: 280px;
+      border: 0;
+    }
+    .sucursal-item {
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #f0eef3;
+    }
+    .sucursal-item strong {
+      font-size: 1.1rem;
+    }
+    footer {
+      background: #1e1e2a;
+      color: #cdcddd;
+      text-align: center;
+      padding: 32px 0;
+      font-size: 0.85rem;
+    }
+    @media (max-width: 700px) {
+      .header-flex {
+        flex-direction: column;
+        text-align: center;
+      }
+      .nav-links a {
+        margin: 0 12px;
+      }
+      .section-title {
+        font-size: 1.8rem;
+      }
+    }
+    /* Empaque destacado */
+    .eco-badge {
+      background: #e6f7ec;
+      border-radius: 60px;
+      display: inline-block;
+      padding: 6px 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #2c6e2f;
+      margin-top: 12px;
+    }
+    .hero-text {
+      background: linear-gradient(120deg, #fff2f5, #ffffff);
+      border-radius: 48px;
+      padding: 40px 32px;
+      margin-top: 20px;
+      text-align: center;
+    }
+    .btn-fake {
+      background: var(--color-primary);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 60px;
+      font-weight: 600;
+      display: inline-block;
+      margin-top: 20px;
+      cursor: default;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container header-flex">
+    <div class="logo">
+      <h1>🧩 MemeCase</h1>
+      <p>fundas con actitud · 100% memes</p>
+    </div>
+    <div class="nav-links">
+      <a href="#producto">Producto</a>
+      <a href="#ps">4 P's</a>
+      <a href="#catalogo">Catálogo</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <!-- Sección destacada: Producto + empaque ecológico (info del PDF) -->
+    <section id="producto">
+      <div class="hero-text">
+        <span class="eco-badge"><i class="fas fa-leaf"></i> Compromiso ecológico</span>
+        <h2 style="font-size: 2rem; margin: 20px 0 12px;">Fundas personalizadas con los memes más virales 😂</h2>
+        <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto;">Diseños únicos para jóvenes que aman el humor, la originalidad y el planeta. <br> 
+        <strong>Cada funda incluye:</strong> Caja de cartón con nuestro logo + material protector biodegradable + etiqueta de cartón 100% compostable 🌱</p>
+        <div class="btn-fake"><i class="fas fa-recycle"></i> Hecho con conciencia ambiental</div>
+      </div>
+    </section>
+
+    <!-- LAS 4 P's DEL MARKETING -->
+    <section id="ps">
+      <h2 class="section-title">📦 Mezcla de marketing: las 4 P's</h2>
+      <div class="grid-4ps">
+        <!-- PRODUCTO: Modifica texto fácilmente -->
+        <div class="p-card">
+          <div class="p-icon"><i class="fas fa-mobile-alt"></i></div>
+          <h3>Producto</h3>
+          <p>Fundas 100% personalizadas con memes divertidos, resistentes a golpes. <br> Empaque ecológico: caja de cartón con logo, relleno protector biodegradable. Etiqueta de cartón que refuerza nuestra imagen premium y sostenible.</p>
+        </div>
+        <!-- PRECIO: Cambiar valores aquí -->
+        <div class="p-card">
+          <div class="p-icon"><i class="fas fa-tag"></i></div>
+          <h3>Precio</h3>
+          <p>Desde <strong>$199 MXN</strong> hasta <strong>$349 MXN</strong> por diseño personalizado. Envío gratis en compras +$500. Precios pensados para estudiantes y amantes de los memes.</p>
+        </div>
+        <!-- PLAZA (distribución) -->
+        <div class="p-card">
+          <div class="p-icon"><i class="fas fa-store"></i></div>
+          <h3>Plaza</h3>
+          <p>Venta online en toda la República Mexicana + tiendas físicas en CDMX (Roma y Polanco). Envíos seguros a domicilio o recoge en punto meme.</p>
+        </div>
+        <!-- PROMOCIÓN -->
+        <div class="p-card">
+          <div class="p-icon"><i class="fas fa-chart-line"></i></div>
+          <h3>Promoción</h3>
+          <p>🔹 15% OFF con código <strong>MEME15</strong> (primera compra).<br>🔹 2x1 en lanzamientos de memes nuevos.<br>🔹 Concurso semanal de memes en Instagram: gana funda gratis.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CATÁLOGO DE FUNDAS - MODIFICAR IMÁGENES, PRECIOS Y NOMBRES FÁCILMENTE -->
+    <section id="catalogo">
+      <h2 class="section-title">🛍️ Catálogo de fundas</h2>
+      <div class="catalogo-grid">
+        <!-- Card 1 - Rickroll -->
+        <div class="product-card">
+          <!-- Cambiar 'src' por la URL de imagen real (JPG/PNG) -->
+          <img class="product-img" src="https://placehold.co/600x600/FFB7C5/FFFFFF?text=Rickroll+Meme&font=montserrat" alt="Funda meme Rickroll">
+          <div class="product-info">
+            <div class="product-title">Never Gonna Give You Up</div>
+            <div class="product-price">$199 MXN</div>
+            <span class="btn-demo"><i class="fas fa-smile-wink"></i> Edición limitada</span>
+          </div>
+        </div>
+        <!-- Card 2 - Pepe y amigos -->
+        <div class="product-card">
+          <img class="product-img" src="https://placehold.co/600x600/B5E3FF/FFFFFF?text=Pepe+la+Rana&font=montserrat" alt="Funda Pepe">
+          <div class="product-info">
+            <div class="product-title">Pepe & Friends</div>
+            <div class="product-price">$249 MXN</div>
+            <span class="btn-demo"><i class="fas fa-frog"></i> Clásico meme</span>
+          </div>
+        </div>
+        <!-- Card 3 - Shiba Wow -->
+        <div class="product-card">
+          <img class="product-img" src="https://placehold.co/600x600/FFE0A3/FFFFFF?text=Shiba+Inu+Wow&font=montserrat" alt="Funda perrito shiba">
+          <div class="product-info">
+            <div class="product-title">Doge · Such meme</div>
+            <div class="product-price">$199 MXN</div>
+            <span class="btn-demo"><i class="fas fa-dog"></i> Wow</span>
+          </div>
+        </div>
+        <!-- Card 4 - Stonks -->
+        <div class="product-card">
+          <img class="product-img" src="https://placehold.co/600x600/C2E0C0/FFFFFF?text=Stonks+Man&font=montserrat" alt="Funda Stonks">
+          <div class="product-info">
+            <div class="product-title">Stonks 📈</div>
+            <div class="product-price">$299 MXN</div>
+            <span class="btn-demo"><i class="fas fa-chart-simple"></i> Tendencia</span>
+          </div>
+        </div>
+        <!-- Card 5 - Troll Face -->
+        <div class="product-card">
+          <img class="product-img" src="https://placehold.co/600x600/F6CFD0/FFFFFF?text=Troll+Face&font=montserrat" alt="Troll face">
+          <div class="product-info">
+            <div class="product-title">Problem? Troll Face</div>
+            <div class="product-price">$219 MXN</div>
+            <span class="btn-demo"><i class="fas fa-face-grin-tongue-squint"></i> Legendario</span>
+          </div>
+        </div>
+        <!-- Card 6 - Cringe Fail -->
+        <div class="product-card">
+          <img class="product-img" src="https://placehold.co/600x600/DCC6F2/FFFFFF?text=Cringe+Fail&font=montserrat" alt="Cringe fail">
+          <div class="product-info">
+            <div class="product-title">Cringe Compilation</div>
+            <div class="product-price">$229 MXN</div>
+            <span class="btn-demo"><i class="fas fa-face-flushed"></i> Nuevo</span>
+          </div>
+        </div>
+      </div>
+      <!-- Comentario para modificación catálogo: Reemplazar las imágenes de placeholder con tus diseños reales, cambiar precios y títulos en cada .product-title / .product-price -->
+      <p style="margin-top: 24px; text-align: center; background: #f1f3fa; padding: 12px; border-radius: 60px; font-size: 0.85rem;"><i class="fas fa-pen-alt"></i> <strong>¿Quieres cambiar catálogo?</strong> Busca los comentarios <!-- CATÁLOGO --> en el código HTML: modifica los textos y las imágenes (src) fácilmente.</p>
+    </section>
+
+    <!-- CONTACTO + DIRECCIÓN + UBICACIONES (teléfonos y direcciones múltiples) -->
+    <section id="contacto">
+      <h2 class="section-title">📍 Contacto y ubicaciones</h2>
+      <div class="contact-wrapper">
+        <!-- Bloque de información de contacto (teléfonos y dirección principal) -->
+        <div class="contact-info-box">
+          <h3><i class="fas fa-phone-alt"></i> Llámanos o escríbenos</h3>
+          <div class="contact-detail">
+            <p><i class="fas fa-mobile-alt"></i> <strong>Teléfonos de contacto:</strong><br>
+            <!-- MODIFICAR TELÉFONOS AQUÍ (líneas de datos) -->
+            📞 <a href="tel:+525512345678" style="text-decoration: none; color: var(--color-primary);">+52 55 1234 5678</a><br>
+            📞 <a href="tel:+525598765432" style="text-decoration: none; color: var(--color-primary);">+52 55 9876 5432</a>
+            </p>
+            <p><i class="fas fa-envelope"></i> <strong>Email:</strong> hola@memecase.com</p>
+            <p><i class="fas fa-map-pin"></i> <strong>Dirección principal (oficinas y envíos):</strong><br>
+            <!-- CAMBIAR DIRECCIÓN PRINCIPAL AQUÍ -->
+            Calle del Meme #420, Col. Internet, Alcaldía Cuauhtémoc, CDMX, México. C.P. 06700</p>
+            <p><i class="fas fa-clock"></i> <strong>Atención:</strong> Lun - Vie 10am a 7pm | Sáb 11am a 4pm</p>
+          </div>
+        </div>
+
+        <!-- Ubicaciones: listado de sucursales (varias ubicaciones) -->
+        <div class="ubicaciones-box">
+          <h3><i class="fas fa-location-dot"></i> Sucursales físicas</h3>
+          <div class="sucursal-item">
+            <strong><i class="fas fa-store"></i> Sucursal Roma</strong><br>
+            Av. Álvaro Obregón 123, Col. Roma Norte, CDMX.<br>
+            📞 55 2345 6789
+          </div>
+          <div class="sucursal-item">
+            <strong><i class="fas fa-store"></i> Sucursal Polanco</strong><br>
+            Av. Presidente Masaryk 456, Polanco, Miguel Hidalgo, CDMX.<br>
+            📞 55 8765 4321
+          </div>
+          <div class="sucursal-item">
+            <strong><i class="fas fa-university"></i> Punto de entrega - Universidad</strong><br>
+            Inside Food Court, UNAM Cultural, Coyoacán (solo recolección previo pedido).
+          </div>
+          <p style="margin-top: 16px; font-size: 0.8rem;"><i class="fas fa-globe"></i> Más ubicaciones próximamente. Envíos a todo el país.</p>
+        </div>
+      </div>
+
+      <!-- MAPA EMBEBIDO (ubicación principal, se puede modificar dirección del iframe) -->
+      <div class="map-container">
+        <h3 style="margin-bottom: 14px;">📍 Nuestra ubicación principal</h3>
+        <!-- CAMBIA EL SRC DEL MAPA si deseas mostrar otra dirección. Aquí mostramos CDMX centro (Calle del Meme #420) usando coordenadas aproximadas -->
+        <iframe 
+          src="https://maps.google.com/maps?q=Calle+del+Meme+420,+Cuauhtémoc,+CDMX&z=15&output=embed&hl=es"
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+        <p style="font-size: 0.8rem; margin-top: 8px;">📍 Dirección del mapa: Calle del Meme #420 (referencia comercial). Para modificar, edita el atributo src del iframe en el código.</p>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p>📱 MemeCase – Fundas con humor y alma ecológica. Caja de cartón 100% reciclable + etiquetas biodegradables 🌎</p>
+    <p style="margin-top: 12px;">&copy; 2025 MemeCase | Hecho con memes y <i class="fas fa-heart" style="color:#ff5e7c;"></i> para jóvenes irreverentes</p>
+    <p style="margin-top: 8px; font-size: 0.7rem;"><i class="fas fa-code-branch"></i> <strong>Fácil edición:</strong> Todos los datos (precios, teléfonos, direcciones, imágenes, textos de las 4P) están comentados en el código. Busca "MODIFICAR" o "CAMBIAR".</p>
+  </div>
+</footer>
+
+<!-- ========== LÍNEAS DE DATOS: GUÍA RÁPIDA PARA MODIFICAR ========== -->
+<!--
+  🔧 COMENTARIOS PARA QUE PUEDAS EDITAR FÁCILMENTE EL CONTENIDO:
+
+  1. 📞 TELÉFONOS & DIRECCIÓN PRINCIPAL:
+     - Busca la sección "contact-info-box" dentro de <section id="contacto">.
+     - Líneas con "Teléfonos de contacto": cambia números en los enlaces <a href="tel:...">.
+     - Dirección principal: texto "Calle del Meme #420..." -> edita.
+
+  2. 🏢 UBICACIONES (más sucursales):
+     - Dentro de "ubicaciones-box", cada "sucursal-item" tiene dirección y teléfono.
+     - Agrega o quita según necesidad.
+
+  3. 🛒 CATÁLOGO (imágenes, nombres, precios):
+     - Sección <section id="catalogo"> dentro del grid "catalogo-grid".
+     - Cada .product-card tiene:
+        * <img class="product-img" src="URL_IMAGEN"> -> Reemplaza placeholders por tus imágenes reales.
+        * .product-title -> Cambia nombre de la funda.
+        * .product-price -> Cambia precio (ej: $199 MXN).
+     - Puedes añadir más cards copiando la estructura.
+
+  4. 💰 PRECIOS Y DESCRIPCIONES EN LAS 4P:
+     - Dentro de "grid-4ps" cada .p-card contiene párrafos editables.
+     - Precio sugerido, promociones, texto de producto.
+
+  5. 🗺️ MAPA:
+     - iframe src: reemplaza la dirección en "q=Calle+del+Meme+420..." por tu ubicación real.
+
+  6. 📦 TEXTO DE EMPAQUE ECOLÓGICO:
+     - Sección hero-text: cambia frase "Caja de cartón con nuestro logo + material protector biodegradable..."
+
+  💡 Para cambiar colores generales (fondo, rosa principal) edita las variables CSS al inicio del estilo (root).
+  Ejemplo: --color-primary: #ff5e7c; -> otro color.
+
+  ¡Listo! Guarda el archivo .html y visualízalo en cualquier navegador.
+-->
+</body>
+</html>
